@@ -1,4 +1,5 @@
 var guesses=0;
+var num=0;
 
 $(document).ready(function(){
 	//start a new game when the page loads
@@ -32,17 +33,17 @@ $(document).ready(function(){
 
 function newGame() {
     //generate random number between 1 and 100
-    var num = generateNumber();
-    console.log("Random number: " + num);
+    num = generateNumber();
+    console.log("Random number: " + num); //debug code
     //clear the input box
     $('#userGuess').val("");
-    //clear the previous guesses
+    //clear the previous guesses from list
     $('ul#guessList li').remove();
     //reset feedback message
     $('#feedback').text("Make Your Guess!"); //placeholder message
     //reset guesses variable
     guesses = 0;
-    //output guess number to page
+    //output guesses number to page
     $('#count').text(guesses);
 }
 
@@ -53,9 +54,11 @@ function generateNumber() {
 function getInput() {
     $('#guessButton').click(function(){
         var input = $('#userGuess').val();
-        console.log(input);
-        //provide feedback
-        $('#feedback').text("Feedback goes here"); //placeholder message
+        console.log(input); //debug code
+        
+        //convert input into integer and compare to random number
+        feedback(input);
+
         //insert previous guesses into list
         $('ul#guessList').append("<li>" + input + "</li>");
         //increment guesses
@@ -63,6 +66,19 @@ function getInput() {
         //output guess number to page
         $('#count').text(guesses);
     });
+}
+
+function feedback(input) {
+    //convert input into integer and compare to random number
+    if (parseInt(input, 10) < num) {
+        $('#feedback').text("Too Low");
+    }
+    else if (parseInt(input, 10) > num) {
+        $('#feedback').text("Too High");
+    }
+    else {
+        $('#feedback').text("Correct");
+    }
 }
 
 
