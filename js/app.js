@@ -86,14 +86,37 @@ function getInput() {
 
 function feedback(input) {
     //convert input into integer and compare to random number
-    if (parseInt(input, 10) < num) {
-        $('#feedback').text("Too Low");
+    if (guesses == 0) {
+        if (parseInt(input, 10) < num) {
+            $('#feedback').text("Too Low");
+        }
+        else if (parseInt(input, 10) > num) {
+            $('#feedback').text("Too High");
+        }
+        else {
+            $('#feedback').text("Correct");
+        }
     }
-    else if (parseInt(input, 10) > num) {
-        $('#feedback').text("Too High");
-    }
+
+    //need to sort out the logic below, simplifying by using some variable names TO DO
     else {
-        $('#feedback').text("Correct");
+        var currentGuess = parseInt(input, 10);
+        var lastGuess = parseInt($('ul#guessList li:last').text(), 10);
+        var currentDiff = Math.abs(num-currentGuess);
+        var lastDiff = Math.abs(num-lastGuess);
+        console.log(currentDiff, lastDiff);
+        if (currentGuess == num) {
+            $('#feedback').text("Correct");
+        }
+        else {
+            if (currentDiff < lastDiff) {
+                $('#feedback').text("Warmer");
+            }
+            else {
+                $('#feedback').text("Colder");
+
+            }
+        }
     }
 }
 
