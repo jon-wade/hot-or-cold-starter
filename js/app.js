@@ -1,16 +1,19 @@
+//global variables
+
 var guesses=0;
 var num=0;
 
+//main body
+
 $(document).ready(function(){
 	//start a new game when the page loads
-
     newGame();
+
+    //get input from user
     getInput();
 
-
-
 	//event listeners
-	//new game
+	//new game clicked?
     $('a.new').click(function(){
         console.log('new game clicked');
         newGame();
@@ -53,18 +56,31 @@ function generateNumber() {
 
 function getInput() {
     $('#guessButton').click(function(){
-        var input = $('#userGuess').val();
-        console.log(input); //debug code
-        
-        //convert input into integer and compare to random number
-        feedback(input);
 
-        //insert previous guesses into list
-        $('ul#guessList').append("<li>" + input + "</li>");
-        //increment guesses
-        guesses++;
-        //output guess number to page
-        $('#count').text(guesses);
+        var input = $('#userGuess').val();
+
+        console.log(input); //debug code
+
+        //validate user input goes here
+        if (isNaN(parseInt(input))) {
+            //reset input box if input is NaN
+            console.log("is NaN");
+            $('#userGuess').val("");
+            $('#feedback').text("Not a valid number! Try again");
+        }
+        else {
+            //convert input into integer and compare to random number
+            feedback(input);
+            //insert previous guesses into list
+            $('ul#guessList').append("<li>" + input + "</li>");
+            //increment guesses
+            guesses++;
+            //output guess number to page
+            $('#count').text(guesses);
+            //clear the input box ready for next guess
+            $('#userGuess').val("");
+        }
+
     });
 }
 
