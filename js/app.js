@@ -87,33 +87,40 @@ function getInput() {
 function feedback(input) {
     //convert input into integer and compare to random number
     if (guesses == 0) {
-        if (parseInt(input, 10) < num) {
-            $('#feedback').text("Too Low");
+        if (Math.abs(num - (parseInt(input, 10))) > 50) {
+            $('#feedback').text("Ice Cold");
         }
-        else if (parseInt(input, 10) > num) {
-            $('#feedback').text("Too High");
+        else if (Math.abs(num - (parseInt(input, 10))) > 30) {
+            $('#feedback').text("Cold");
         }
-        else {
+        else if (Math.abs(num - (parseInt(input, 10))) > 20) {
+            $('#feedback').text("Warm");
+        }
+        else if (Math.abs(num - (parseInt(input, 10))) > 10) {
+            $('#feedback').text("Hot");
+        }
+        else if (Math.abs(num - (parseInt(input, 10))) > 20) {
+            $('#feedback').text("Very Hot");
+        }
+        else if (num - (parseInt(input, 10)) == 0) {
             $('#feedback').text("Correct");
         }
     }
-
-    //need to sort out the logic below, simplifying by using some variable names TO DO
-    else {
-        var currentGuess = parseInt(input, 10);
-        var lastGuess = parseInt($('ul#guessList li:last').text(), 10);
-        var currentDiff = Math.abs(num-currentGuess);
-        var lastDiff = Math.abs(num-lastGuess);
-        console.log(currentDiff, lastDiff);
-        if (currentGuess == num) {
-            $('#feedback').text("Correct");
-        }
-        else {
-            if (currentDiff < lastDiff) {
-                $('#feedback').text("Warmer");
+    if (guesses>0) {
+            var currentGuess = parseInt(input, 10);
+            var lastGuess = parseInt($('ul#guessList li:last').text(), 10);
+            var currentDiff = Math.abs(num - currentGuess);
+            var lastDiff = Math.abs(num - lastGuess);
+            console.log(currentDiff, lastDiff);
+            if (currentGuess == num) {
+                $('#feedback').text("Correct");
             }
             else {
-                $('#feedback').text("Colder");
+                if (currentDiff < lastDiff) {
+                    $('#feedback').text("Warmer");
+                }
+                else {
+                    $('#feedback').text("Colder");
 
             }
         }
